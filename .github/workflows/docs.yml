@@ -6,50 +6,14 @@ on:
     paths:
       - 'include/**'
       - 'docs/**'
+      - 'examples/**'
       - 'Doxyfile'
       - '.github/workflows/docs.yml'
+      - 'README.md'
+      - 'CONTRIBUTING.md'
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
-
-jobs:
-  generate-docs:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Install Dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y doxygen graphviz
-        sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-latex-extra
-    
-    - name: Generate Doxygen Documentation
-      run: |
-        doxygen Doxyfile
-    
-    - name: Build LaTeX Paper
-      run: |
-        cd paper
-        make
-        cd ..
-      continue-on-error: true
-    
-    - name: Setup Pages
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-      uses: actions/configure-pages@v3
-    
-    - name: Upload Artifacts
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-      uses: actions/upload-pages-artifact@v2
-      with:
-        path: docs/api/html
-    
-    - name: Deploy to GitHub Pages
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-      id: deployment
-      uses: actions/deploy-pages@v2
 
 permissions:
   contents: read
@@ -59,3 +23,126 @@ permissions:
 concurrency:
   group: "pages"
   cancel-in-progress: false
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+    
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y doxygen graphviz
+        sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-latex-extra
+        # Install latest Doxygen for better features
+        wget -q https://www.doxygen.nl/files/doxygen-1.9.8.linux.bin.tar.gz
+        tar xf doxygen-1.9.8.linux.bin.tar.gz
+        sudo cp doxygen-1.9.8/bin/doxygen /usr/local/bin/
+        doxygen --version
+    
+    - name: Prepare Documentation Build
+      run: |
+        # Create output directory
+        mkdir -p doxygen-output
+        
+        # Create images directory if it doesn't exist
+        mkdir -p docs/images
+        
+        # Generate a simple logo if one doesn't exist
+        if [ ! -f docs/images/logo.png ]; then
+          echo "Creating placeholder logo..."
+          # Create a simple SVG logo and convert to PNG
+          cat > docs/images/logo.svg << 'EOF'
+        <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+          <rect width="64" height="64" fill="#2e7d32" rx="8"/>
+          <text x="32" y="40" font-family="Arial" font-size="24" font-weight="bold" fill="white" text-anchor="middle">CBT</text>
+        </svg>
+        EOF
+          # Try to convert SVG to PNG if ImageMagick is available
+          if command -v convert &> /dev/null; then
+            convert docs/images/logo.svg docs/images/logo.png
+          else
+            # Just copy the SVG as a placeholder
+            cp docs/images/logo.svg docs/images/logo.png
+          fi
+        fi
+    
+    - name: Generate Doxygen Documentation
+      run: |
+        echo "Running Doxygen..."
+        doxygen Doxyfile
+        
+        # Check if documentation was generated
+        if [ -d "doxygen-output/html" ]; then
+          echo "Documentation generated successfully"
+          ls -la doxygen-output/html/
+        else
+          echo "Error: Documentation was not generated"
+          exit 1
+        fi
+    
+    - name: Build LaTeX Paper
+      run: |
+        if [ -d "paper" ] && [ -f "paper/Makefile" ]; then
+          echo "Building LaTeX paper..."
+          cd paper
+          make
+          cd ..
+          # Copy PDF to documentation if it exists
+          if [ -f "paper/cbt.pdf" ]; then
+            cp paper/cbt.pdf doxygen-output/html/
+            echo "Paper PDF copied to documentation"
+          fi
+        else
+          echo "No paper directory or Makefile found, skipping paper build"
+        fi
+      continue-on-error: true
+    
+    - name: Prepare GitHub Pages
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      run: |
+        # Create .nojekyll file to bypass Jekyll processing
+        touch doxygen-output/html/.nojekyll
+        
+        # Create a simple index redirect if needed
+        if [ ! -f "doxygen-output/html/index.html" ]; then
+          echo "Creating index.html redirect..."
+          cat > doxygen-output/html/index.html << 'EOF'
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta http-equiv="refresh" content="0; url=./index.html">
+        </head>
+        <body>
+          <p>Redirecting to documentation...</p>
+        </body>
+        </html>
+        EOF
+        fi
+        
+        echo "Documentation ready for deployment"
+    
+    - name: Setup Pages
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      uses: actions/configure-pages@v5
+    
+    - name: Upload Artifacts
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: doxygen-output/html
+    
+    - name: Deploy to GitHub Pages
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      id: deployment
+      uses: actions/deploy-pages@v4
+      
+    - name: Output deployment URL
+      if: steps.deployment.outcome == 'success'
+      run: |
+        echo "Documentation deployed successfully!"
+        echo "View at: https://queelius.github.io/cbt/"
