@@ -1,0 +1,61 @@
+name: Generate and Deploy Documentation
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'include/**'
+      - 'docs/**'
+      - 'Doxyfile'
+      - '.github/workflows/docs.yml'
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y doxygen graphviz
+        sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-latex-extra
+    
+    - name: Generate Doxygen Documentation
+      run: |
+        doxygen Doxyfile
+    
+    - name: Build LaTeX Paper
+      run: |
+        cd paper
+        make
+        cd ..
+      continue-on-error: true
+    
+    - name: Setup Pages
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      uses: actions/configure-pages@v3
+    
+    - name: Upload Artifacts
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      uses: actions/upload-pages-artifact@v2
+      with:
+        path: docs/api/html
+    
+    - name: Deploy to GitHub Pages
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      id: deployment
+      uses: actions/deploy-pages@v2
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false

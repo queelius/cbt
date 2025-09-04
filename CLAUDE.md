@@ -11,19 +11,25 @@ CBT (Computational Basis Transforms) is a header-only C++17 library that impleme
 ```bash
 # Configure and build
 mkdir build && cd build
-cmake .. -DCBT_BUILD_TESTS=ON -DCBT_BUILD_EXAMPLES=ON
+cmake .. -DCBT_BUILD_TESTS=ON -DCBT_BUILD_EXAMPLES=ON -DENABLE_COVERAGE=ON
 make -j$(nproc)
 
 # Run tests
 ctest --verbose
-# Or directly: ./tests/test_cbt
+# Or directly: ./tests/test_cbt_comprehensive
+
+# Run specific test with debugging
+gdb ./tests/test_cbt_comprehensive
 
 # Run examples
 ./examples/cbt_demo
 ./examples/mapping_demo
 
-# Build documentation
-./build_docs.sh  # Generates Doxygen API docs and compiles LaTeX paper
+# Generate code coverage (after running tests)
+gcov tests/CMakeFiles/test_cbt_comprehensive.dir/*.gcno
+
+# Build paper (requires LaTeX)
+cd paper && make  # Builds cbt.pdf
 ```
 
 ## Architecture
@@ -44,9 +50,10 @@ ctest --verbose
 - **Utilities**: `composed.hpp` for transform composition, `mappings.hpp` for custom mappings
 
 ### Testing
-- Tests are in `tests/test_cbt.cpp`
-- Currently tests basic functionality of core transforms
-- No coverage tooling configured yet
+- Main test file: `tests/test_cbt_comprehensive.cpp`
+- Tests comprehensive functionality of all transforms
+- Coverage can be enabled with `-DENABLE_COVERAGE=ON` CMake flag
+- Run with `ctest` or directly via `./tests/test_cbt_comprehensive`
 
 ### Examples
 - `examples/cbt_demo.cpp`: Demonstrates all major transforms
@@ -58,7 +65,7 @@ ctest --verbose
 1. Create header in `include/cbt/new_transform.hpp`
 2. Follow the CBT pattern with clear trade-off documentation
 3. Include in `include/cbt/cbt.hpp`
-4. Add tests to `tests/test_cbt.cpp`
+4. Add tests to `tests/test_cbt_comprehensive.cpp`
 5. Add demo usage to `examples/cbt_demo.cpp`
 
 ### Code Style
@@ -66,17 +73,6 @@ ctest --verbose
 - Use `cbt` namespace
 - Follow existing naming conventions (e.g., `lgd` for log-domain double)
 - Document trade-offs clearly in comments
-
-### Testing Individual Components
-```bash
-# Build and run specific test
-cd build
-make test_cbt
-./tests/test_cbt
-
-# Debug with gdb
-gdb ./tests/test_cbt
-```
 
 ## Important Notes
 - C++17 required (uses features like structured bindings, if constexpr)

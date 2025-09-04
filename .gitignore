@@ -2,16 +2,24 @@
 build/
 cmake-build-*/
 out/
+_build/
+[Bb]uild*/
 
 # Documentation
 docs/api/
+docs/html/
+docs/latex/
 *.aux
 *.log
 *.bbl
 *.blg
 *.out
 *.toc
-*.pdf
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+# Don't ignore the paper PDF in paper/ directory
+!paper/*.pdf
 
 # IDE files
 .vscode/
@@ -35,7 +43,16 @@ Thumbs.db
 # Test outputs
 test_debug
 test_debug.cpp
+*.gcda
+*.gcno
+*.gcov
+coverage.info
+coverage/
 
 # Temporary files
 *.tmp
 *.bak
+
+# Package files
+*.tar.gz
+*.zip
