@@ -1,0 +1,41 @@
+# Build directories
+build/
+cmake-build-*/
+out/
+
+# Documentation
+docs/api/
+*.aux
+*.log
+*.bbl
+*.blg
+*.out
+*.toc
+*.pdf
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Compiled files
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+
+# Test outputs
+test_debug
+test_debug.cpp
+
+# Temporary files
+*.tmp
+*.bak
