@@ -1,0 +1,27 @@
+# GitHub Pages Configuration for CBT Documentation
+
+# Theme settings (not needed for Doxygen output)
+# GitHub Pages will serve the HTML as-is
+
+# Exclude files from processing
+exclude:
+  - build/
+  - tests/
+  - examples/
+  - include/
+  - paper/
+  - CMakeLists.txt
+  - Doxyfile
+  - build_docs.sh
+  - "*.cpp"
+  - "*.hpp"
+
+# Include the documentation
+include:
+  - doxygen-output/
+
+# Plugins (minimal for static HTML)
+plugins: []
+
+# Disable Jekyll processing since we're using Doxygen
+# The .nojekyll file in the HTML output directory will handle this

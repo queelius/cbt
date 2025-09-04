@@ -9,6 +9,7 @@ _build/
 docs/api/
 docs/html/
 docs/latex/
+doxygen-output/
 *.aux
 *.log
 *.bbl

@@ -1,0 +1,332 @@
+/*
+ * Doxygen Awesome Theme
+ * https://github.com/jothepro/doxygen-awesome-css
+ * 
+ * Custom styling for CBT documentation
+ */
+
+:root {
+    /* Primary brand colors */
+    --primary-color: #1e88e5;
+    --primary-dark-color: #1565c0;
+    --primary-light-color: #42a5f5;
+    
+    /* Color Scheme */
+    --page-background-color: #ffffff;
+    --page-foreground-color: #2c3e50;
+    --page-secondary-foreground-color: #67727d;
+    --separator-color: #e0e0e0;
+    --primary-light-color: #42a5f5;
+    --primary-dark-color: #1565c0;
+    --primary-color: #1e88e5;
+    
+    /* Spacing */
+    --spacing-small: 5px;
+    --spacing-medium: 10px;
+    --spacing-large: 16px;
+    
+    /* Code block colors */
+    --code-background: #f8f9fa;
+    --code-foreground: #2c3e50;
+    
+    /* Fragment (code block) colors */
+    --fragment-background: #f8f9fa;
+    --fragment-foreground: #2c3e50;
+    --fragment-border: #dee2e6;
+    --fragment-copy-background: var(--primary-color);
+    --fragment-copy-color: #ffffff;
+    
+    /* Sidebar */
+    --side-nav-background: #f8f9fa;
+    --side-nav-foreground: var(--page-foreground-color);
+    --side-nav-arrow-color: var(--page-secondary-foreground-color);
+    
+    /* Table colors */
+    --table-background: #ffffff;
+    --table-alt-background: #f8f9fa;
+    
+    /* Detail colors */
+    --detail-background: #f8f9fa;
+    --detail-foreground: var(--page-foreground-color);
+    --detail-border: #dee2e6;
+    
+    /* Fonts */
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-family-monospace: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    
+    /* Sizes */
+    --navigation-font-size: 14px;
+    --page-font-size: 16px;
+    --code-font-size: 14px;
+    --title-font-size: 32px;
+}
+
+/* Dark mode variables */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --page-background-color: #1a1a1a;
+        --page-foreground-color: #e8e8e8;
+        --page-secondary-foreground-color: #a0a0a0;
+        --separator-color: #3a3a3a;
+        --code-background: #2a2a2a;
+        --fragment-background: #282c34;
+        --fragment-border: #3a3a3a;
+        --side-nav-background: #252525;
+        --table-background: #1a1a1a;
+        --table-alt-background: #252525;
+        --detail-background: #252525;
+        --detail-border: #3a3a3a;
+    }
+}
+
+html.dark-mode {
+    --page-background-color: #1a1a1a;
+    --page-foreground-color: #e8e8e8;
+    --page-secondary-foreground-color: #a0a0a0;
+    --separator-color: #3a3a3a;
+    --code-background: #2a2a2a;
+    --fragment-background: #282c34;
+    --fragment-border: #3a3a3a;
+    --side-nav-background: #252525;
+    --table-background: #1a1a1a;
+    --table-alt-background: #252525;
+    --detail-background: #252525;
+    --detail-border: #3a3a3a;
+}
+
+/* Base styles */
+body {
+    font-family: var(--font-family);
+    font-size: var(--page-font-size);
+    color: var(--page-foreground-color);
+    background-color: var(--page-background-color);
+    line-height: 1.6;
+}
+
+/* Header styling */
+#titlearea {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark-color));
+    color: white;
+    padding: 20px;
+    border: none;
+}
+
+#projectname {
+    font-size: var(--title-font-size);
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+#projectbrief {
+    font-size: 16px;
+    color: rgba(255,255,255,0.9);
+    margin-top: 5px;
+}
+
+/* Navigation improvements */
+#nav-tree {
+    background: var(--side-nav-background);
+    font-size: var(--navigation-font-size);
+}
+
+#nav-tree .selected {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Content area */
+.contents {
+    padding: var(--spacing-large);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Code blocks */
+.fragment {
+    background: var(--fragment-background);
+    border: 1px solid var(--fragment-border);
+    border-radius: 4px;
+    padding: var(--spacing-medium);
+    font-family: var(--font-family-monospace);
+    font-size: var(--code-font-size);
+    overflow-x: auto;
+}
+
+.line {
+    font-family: var(--font-family-monospace);
+}
+
+/* Tables */
+table.markdownTable,
+table.doxtable {
+    border-collapse: collapse;
+    width: 100%;
+    margin: var(--spacing-large) 0;
+}
+
+table.markdownTable th,
+table.doxtable th {
+    background: var(--primary-color);
+    color: white;
+    padding: var(--spacing-medium);
+    text-align: left;
+    font-weight: bold;
+}
+
+table.markdownTable td,
+table.doxtable td {
+    padding: var(--spacing-medium);
+    border: 1px solid var(--separator-color);
+    background: var(--table-background);
+}
+
+table.markdownTable tr:nth-child(even) td,
+table.doxtable tr:nth-child(even) td {
+    background: var(--table-alt-background);
+}
+
+/* Member declarations */
+.memitem {
+    margin: var(--spacing-large) 0;
+    border: 1px solid var(--separator-color);
+    border-radius: 4px;
+    background: var(--detail-background);
+}
+
+.memproto {
+    background: var(--fragment-background);
+    border-bottom: 1px solid var(--separator-color);
+    padding: var(--spacing-medium);
+    font-family: var(--font-family-monospace);
+}
+
+.memdoc {
+    padding: var(--spacing-medium);
+}
+
+/* Search box */
+#MSearchBox {
+    background: white;
+    border: 1px solid var(--separator-color);
+    border-radius: 4px;
+    padding: 5px;
+}
+
+/* Tooltips */
+.tooltip {
+    background: var(--page-background-color);
+    border: 1px solid var(--separator-color);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: var(--spacing-small);
+}
+
+/* Directory tree */
+.directory {
+    font-size: var(--navigation-font-size);
+    margin: var(--spacing-medium) 0;
+}
+
+.directory td.entry {
+    padding: var(--spacing-small);
+    vertical-align: middle;
+}
+
+/* Responsive improvements */
+@media screen and (max-width: 768px) {
+    #side-nav {
+        display: none;
+    }
+    
+    .contents {
+        margin-left: 0 !important;
+        padding: var(--spacing-medium);
+    }
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Better links */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--primary-dark-color);
+    text-decoration: underline;
+}
+
+/* Improved headings */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--page-foreground-color);
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.2em; }
+
+/* Group headers */
+.groupheader {
+    border-bottom: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 1.5em;
+    padding-bottom: 0.5em;
+}
+
+/* Math formulas */
+.formulaDsp {
+    text-align: center;
+    margin: var(--spacing-large) 0;
+}
+
+/* Note, warning, and other admonitions */
+dl.note, dl.warning, dl.attention, dl.todo {
+    border-left: 4px solid;
+    padding: var(--spacing-medium);
+    margin: var(--spacing-large) 0;
+    background: var(--detail-background);
+}
+
+dl.note {
+    border-color: #4CAF50;
+}
+
+dl.warning {
+    border-color: #ff9800;
+}
+
+dl.attention {
+    border-color: #f44336;
+}
+
+/* Copy button for code blocks */
+.fragment-copy-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 5px 10px;
+    background: var(--fragment-copy-background);
+    color: var(--fragment-copy-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.fragment:hover .fragment-copy-button {
+    opacity: 1;
+}
+
+.fragment-copy-button:hover {
+    background: var(--primary-dark-color);
+}

@@ -1,0 +1,193 @@
+<doxygenlayout version="1.0">
+  <!-- Navigation tabs at the top -->
+  <navindex>
+    <tab type="mainpage" visible="yes" title="Home"/>
+    <tab type="pages" visible="yes" title="Documentation" intro="Comprehensive guides and tutorials for the CBT Library"/>
+    <tab type="modules" visible="yes" title="Modules" intro="Organized by functionality"/>
+    <tab type="namespaces" visible="yes" title="Namespaces">
+      <tab type="namespacelist" visible="yes" title="Namespace List"/>
+      <tab type="namespacemembers" visible="yes" title="Namespace Members"/>
+    </tab>
+    <tab type="classes" visible="yes" title="Classes">
+      <tab type="classlist" visible="yes" title="Class List"/>
+      <tab type="classindex" visible="yes" title="Class Index"/>
+      <tab type="hierarchy" visible="yes" title="Class Hierarchy"/>
+      <tab type="classmembers" visible="yes" title="Class Members"/>
+    </tab>
+    <tab type="files" visible="yes" title="Files">
+      <tab type="filelist" visible="yes" title="File List"/>
+      <tab type="globals" visible="yes" title="File Members"/>
+    </tab>
+    <tab type="examples" visible="yes" title="Examples" intro="Complete working examples demonstrating CBT features"/>
+  </navindex>
+
+  <!-- Class page layout -->
+  <class>
+    <briefdescription visible="yes"/>
+    <detaileddescription title="Detailed Description"/>
+    <includes visible="yes"/>
+    <inheritancegraph visible="yes"/>
+    <collaborationgraph visible="yes"/>
+    <memberdecl>
+      <nestedclasses visible="yes" title="Nested Classes"/>
+      <publictypes title="Public Types"/>
+      <services title=""/>
+      <interfaces title=""/>
+      <publicslots title=""/>
+      <signals title=""/>
+      <publicmethods title="Public Member Functions"/>
+      <publicstaticmethods title="Static Public Member Functions"/>
+      <publicattributes title="Public Attributes"/>
+      <publicstaticattributes title="Static Public Attributes"/>
+      <protectedtypes title="Protected Types"/>
+      <protectedslots title=""/>
+      <protectedmethods title="Protected Member Functions"/>
+      <protectedstaticmethods title="Static Protected Member Functions"/>
+      <protectedattributes title="Protected Attributes"/>
+      <protectedstaticattributes title="Static Protected Attributes"/>
+      <packagetypes title=""/>
+      <packagemethods title=""/>
+      <packagestaticmethods title=""/>
+      <packageattributes title=""/>
+      <packagestaticattributes title=""/>
+      <properties title=""/>
+      <events title=""/>
+      <privatetypes title="Private Types"/>
+      <privateslots title=""/>
+      <privatemethods title="Private Member Functions"/>
+      <privatestaticmethods title="Static Private Member Functions"/>
+      <privateattributes title="Private Attributes"/>
+      <privatestaticattributes title="Static Private Attributes"/>
+      <friends title="Friends"/>
+      <related title="Related Functions" subtitle="(Note that these are not member functions.)"/>
+      <membergroups visible="yes"/>
+    </memberdecl>
+    <memberdef>
+      <inlineclasses title=""/>
+      <typedefs title="Type Definitions"/>
+      <enums title="Enumerations"/>
+      <services title=""/>
+      <interfaces title=""/>
+      <constructors title="Constructors &amp; Destructors"/>
+      <functions title="Member Functions"/>
+      <related title="Related Functions"/>
+      <variables title="Member Data"/>
+      <properties title=""/>
+      <events title=""/>
+    </memberdef>
+    <allmemberslink visible="yes"/>
+    <usedfiles visible="yes"/>
+    <authorsection visible="yes"/>
+  </class>
+
+  <!-- Namespace page layout -->
+  <namespace>
+    <briefdescription visible="yes"/>
+    <detaileddescription title="Detailed Description"/>
+    <memberdecl>
+      <nestednamespaces visible="yes" title="Nested Namespaces"/>
+      <constantgroups visible="yes" title=""/>
+      <classes visible="yes" title="Classes"/>
+      <typedefs title="Type Definitions"/>
+      <enums title="Enumerations"/>
+      <functions title="Functions"/>
+      <variables title="Variables"/>
+      <membergroups visible="yes"/>
+    </memberdecl>
+    <memberdef>
+      <inlineclasses title=""/>
+      <typedefs title="Type Definitions"/>
+      <enums title="Enumerations"/>
+      <functions title="Functions"/>
+      <variables title="Variables"/>
+    </memberdef>
+    <authorsection visible="yes"/>
+  </namespace>
+
+  <!-- File page layout -->
+  <file>
+    <briefdescription visible="yes"/>
+    <detaileddescription title="Detailed Description"/>
+    <includes visible="yes"/>
+    <includegraph visible="yes"/>
+    <includedbygraph visible="yes"/>
+    <sourcelink visible="yes"/>
+    <memberdecl>
+      <classes visible="yes" title="Classes"/>
+      <namespaces visible="yes" title="Namespaces"/>
+      <constantgroups visible="yes" title=""/>
+      <defines title="Macros"/>
+      <typedefs title="Type Definitions"/>
+      <enums title="Enumerations"/>
+      <functions title="Functions"/>
+      <variables title="Variables"/>
+      <membergroups visible="yes"/>
+    </memberdecl>
+    <memberdef>
+      <inlineclasses title=""/>
+      <defines title="Macro Definitions"/>
+      <typedefs title="Type Definitions"/>
+      <enums title="Enumerations"/>
+      <functions title="Functions"/>
+      <variables title="Variables"/>
+    </memberdef>
+    <authorsection/>
+  </file>
+
+  <!-- Group page layout -->
+  <group>
+    <briefdescription visible="yes"/>
+    <detaileddescription title="Detailed Description"/>
+    <groupgraph visible="yes"/>
+    <memberdecl>
+      <nestedgroups visible="yes" title="Modules"/>
+      <dirs visible="yes" title=""/>
+      <files visible="yes" title=""/>
+      <namespaces visible="yes" title="Namespaces"/>
+      <classes visible="yes" title="Classes"/>
+      <defines title="Macros"/>
+      <typedefs title="Type Definitions"/>
+      <enums title="Enumerations"/>
+      <enumvalues title=""/>
+      <functions title="Functions"/>
+      <variables title="Variables"/>
+      <signals title=""/>
+      <publicslots title=""/>
+      <protectedslots title=""/>
+      <privateslots title=""/>
+      <events title=""/>
+      <properties title=""/>
+      <friends title=""/>
+      <membergroups visible="yes"/>
+    </memberdecl>
+    <memberdef>
+      <pagedocs/>
+      <inlineclasses title=""/>
+      <defines title="Macro Definitions"/>
+      <typedefs title="Type Definitions"/>
+      <enums title="Enumerations"/>
+      <enumvalues title=""/>
+      <functions title="Functions"/>
+      <variables title="Variables"/>
+      <signals title=""/>
+      <publicslots title=""/>
+      <protectedslots title=""/>
+      <privateslots title=""/>
+      <events title=""/>
+      <properties title=""/>
+      <friends title=""/>
+    </memberdef>
+    <authorsection visible="yes"/>
+  </group>
+
+  <!-- Directory page layout -->
+  <directory>
+    <briefdescription visible="yes"/>
+    <detaileddescription title="Detailed Description"/>
+    <directorygraph visible="yes"/>
+    <memberdecl>
+      <dirs visible="yes"/>
+      <files visible="yes"/>
+    </memberdecl>
+  </directory>
+</doxygenlayout>
