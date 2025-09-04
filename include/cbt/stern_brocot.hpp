@@ -145,36 +145,4 @@ public:
     }
 };
 
-// Farey sequence generator
-template<typename T>
-class farey_sequence {
-    T n_;
-    
-public:
-    explicit farey_sequence(T n) : n_(n) {}
-    
-    std::vector<stern_brocot<T>> generate() const {
-        std::vector<stern_brocot<T>> sequence;
-        sequence.emplace_back(0, 1);
-        sequence.emplace_back(1, n_);
-        
-        size_t i = 0;
-        while (i < sequence.size() - 1) {
-            T a = sequence[i].numerator();
-            T b = sequence[i].denominator();
-            T c = sequence[i + 1].numerator();
-            T d = sequence[i + 1].denominator();
-            
-            if (b + d <= n_) {
-                sequence.insert(sequence.begin() + i + 1, 
-                               stern_brocot<T>(a + c, b + d));
-            } else {
-                i++;
-            }
-        }
-        
-        return sequence;
-    }
-};
-
 } // namespace cbt

@@ -28,7 +28,9 @@ public:
     
     // Multiplication is highly efficient
     multiscale_log operator*(const multiscale_log& other) const {
-        return multiscale_log(value_ * other.value_);
+        multiscale_log result;
+        result.value_ = value_ * other.value_;
+        return result;
     }
     
     T to_value() const {

@@ -128,10 +128,20 @@ cmake --build .
 ctest
 ```
 
-## Requirements
+## Prerequisites
 
-- C++17 or later
-- CMake 3.14+ (for building examples/tests)
+### Required
+- **C++17 compatible compiler**
+  - GCC 7.0 or later
+  - Clang 5.0 or later
+  - MSVC 2017 (19.11) or later
+  - Apple Clang 10.0 or later
+- **CMake 3.14 or higher** (for building examples/tests)
+
+### Optional
+- **Doxygen** (for generating API documentation)
+- **LaTeX** (pdflatex, bibtex) for building the academic paper
+- **gcov/lcov** (for code coverage analysis)
 
 ## Theory
 
@@ -151,6 +161,35 @@ The CBT framework provides:
 - **Computer Graphics**: Level-of-detail and scale management
 - **Finance**: High-precision arithmetic for monetary calculations
 
+## Troubleshooting
+
+### Common Issues
+
+**Build Errors with C++17 Features**
+- Ensure your compiler supports C++17. Check version with:
+  ```bash
+  g++ --version  # For GCC
+  clang++ --version  # For Clang
+  ```
+- Update your compiler if needed or use `-std=c++17` flag explicitly
+
+**CMake Cannot Find Package**
+- When integrating CBT in your project:
+  ```cmake
+  # Add CBT directory to module path
+  list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/path/to/cbt")
+  ```
+
+**Numeric Overflow/Underflow**
+- Use `multiscale<T>` transform for extreme values
+- Consider `lg<T>` for products of many terms
+- Check transform documentation for domain limitations
+
+**Test Coverage Not Working**
+- Ensure gcov is installed: `apt install gcov` (Ubuntu) or `brew install gcov` (macOS)
+- Build with coverage flags: `cmake .. -DENABLE_COVERAGE=ON`
+- Run tests before generating coverage reports
+
 ## Contributing
 
 Contributions of new transforms are welcome! Each transform should:
@@ -158,6 +197,26 @@ Contributions of new transforms are welcome! Each transform should:
 2. Provide clean, elegant implementation
 3. Include usage examples
 4. Follow the CBT pattern
+5. Include comprehensive unit tests
+
+### Development Workflow
+```bash
+# Fork and clone the repository
+git clone https://github.com/yourusername/cbt.git
+cd cbt
+
+# Create a feature branch
+git checkout -b new-transform
+
+# Build and test
+mkdir build && cd build
+cmake .. -DCBT_BUILD_TESTS=ON -DENABLE_COVERAGE=ON
+make -j$(nproc)
+./tests/test_cbt_comprehensive
+
+# Check coverage
+gcov tests/CMakeFiles/test_cbt_comprehensive.dir/*.gcno
+```
 
 ## License
 

@@ -99,7 +99,7 @@ tropical_min<T> lg_to_tropical_min(const lg<T>& x) {
 template<typename T>
 lg<T> tropical_min_to_lg(const tropical_min<T>& x) {
     if (x.is_infinite()) {
-        return lg<T>::zero();
+        return lg<T>(0);  // Return lg of 0 (maps to -infinity)
     }
     return lg<T>::from_log(x.value());
 }

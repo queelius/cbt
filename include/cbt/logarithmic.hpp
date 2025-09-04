@@ -82,14 +82,6 @@ public:
         return result;
     }
     
-    static constexpr lg zero() {
-        return lg(0);
-    }
-    
-    static constexpr lg one() {
-        return lg(1);
-    }
-    
     /// @brief Convert back to real domain
     /// @return The exponential of the internal log value
     /// @warning May overflow for large log values

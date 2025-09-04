@@ -59,13 +59,29 @@ public:
         return odds_ratio(odds_ / other.odds_);
     }
     
-    // Comparison
+    // Comparison operators (full set for consistency)
     constexpr bool operator==(const odds_ratio& other) const {
         return odds_ == other.odds_;
     }
     
+    constexpr bool operator!=(const odds_ratio& other) const {
+        return !(*this == other);
+    }
+    
     constexpr bool operator<(const odds_ratio& other) const {
         return odds_ < other.odds_;
+    }
+    
+    constexpr bool operator<=(const odds_ratio& other) const {
+        return odds_ <= other.odds_;
+    }
+    
+    constexpr bool operator>(const odds_ratio& other) const {
+        return odds_ > other.odds_;
+    }
+    
+    constexpr bool operator>=(const odds_ratio& other) const {
+        return odds_ >= other.odds_;
     }
     
     // Output
