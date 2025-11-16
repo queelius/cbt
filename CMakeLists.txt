@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(cbt VERSION 1.0.0 LANGUAGES CXX)
+project(cbt VERSION 1.1.0 LANGUAGES CXX)
 
 # C++17 is required for CBT library
 set(CMAKE_CXX_STANDARD 17)

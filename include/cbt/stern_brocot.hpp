@@ -21,6 +21,8 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <limits>
+#include <type_traits>
 
 namespace cbt {
 
@@ -89,27 +91,78 @@ public:
     
     // Find best rational approximation with denominator ≤ max_den
     static stern_brocot approximate(double x, T max_den) {
-        if (x < 0) {
-            auto result = approximate(-x, max_den);
-            return stern_brocot(-result.num_, result.den_);
+        if (max_den <= 0) {
+            throw std::invalid_argument("max_den must be positive");
+        }
+        if (!std::isfinite(x)) {
+            throw std::invalid_argument("Cannot approximate NaN or infinity");
         }
         
-        // Simple brute force for small denominators
-        T best_num = 0, best_den = 1;
-        double best_error = std::abs(x);
+        if (x == 0.0) {
+            return stern_brocot(0, 1);
+        }
         
-        for (T den = 1; den <= max_den; ++den) {
-            T num = static_cast<T>(x * den + 0.5);  // Round to nearest
-            double error = std::abs(x - static_cast<double>(num) / den);
+        bool negative = x < 0;
+        long double value = std::abs(static_cast<long double>(x));
+        const long double epsilon = std::numeric_limits<long double>::epsilon();
+        
+        // Continued fraction-based search through Stern-Brocot tree.
+        T prev_num = 0;
+        T prev_den = 1;
+        T curr_num = 1;
+        T curr_den = 0;
+        long double cf_value = value;
+        
+        for (int iterations = 0; iterations < 256; ++iterations) {
+            T a = static_cast<T>(std::floor(cf_value));
+            T next_num = a * curr_num + prev_num;
+            T next_den = a * curr_den + prev_den;
             
-            if (error < best_error) {
-                best_error = error;
-                best_num = num;
-                best_den = den;
+            if (next_den > max_den) {
+                if (curr_den != 0) {
+                    T t = (max_den - prev_den) / curr_den;
+                    if (t > 0) {
+                        T candidate_num = t * curr_num + prev_num;
+                        T candidate_den = t * curr_den + prev_den;
+                        
+                        long double candidate_val = static_cast<long double>(candidate_num) / candidate_den;
+                        long double current_val = static_cast<long double>(curr_num) / curr_den;
+                        
+                        auto candidate_error = std::abs(value - candidate_val);
+                        auto current_error = std::abs(value - current_val);
+                        
+                        if (candidate_den > 0 && candidate_error < current_error) {
+                            curr_num = candidate_num;
+                            curr_den = candidate_den;
+                        }
+                    }
+                }
+                break;
+            }
+            
+            prev_num = curr_num;
+            prev_den = curr_den;
+            curr_num = next_num;
+            curr_den = next_den;
+            
+            long double remainder = cf_value - static_cast<long double>(a);
+            if (std::abs(remainder) <= epsilon) {
+                break;
+            }
+            
+            cf_value = 1.0L / remainder;
+            if (!std::isfinite(static_cast<double>(cf_value))) {
+                break;
             }
         }
         
-        return stern_brocot(best_num, best_den);
+        if (curr_den == 0) {
+            curr_den = 1;
+            curr_num = 0;
+        }
+        
+        auto result = stern_brocot(curr_num, curr_den);
+        return negative ? stern_brocot(-result.num_, result.den_) : result;
     }
     
     // Continued fraction representation

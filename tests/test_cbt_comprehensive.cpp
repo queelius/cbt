@@ -145,13 +145,17 @@ void test_stern_brocot_comprehensive() {
     assert(quotient.numerator() == 3 && quotient.denominator() == 2);
     
     // Approximations
-    auto pi_approx = stern_brocot<int>::approximate(3.14159, 100);
-    assert(pi_approx.denominator() <= 100);
-    assert(std::abs(pi_approx.to_double() - 3.14159) < 0.001);
+    auto pi_approx_100 = stern_brocot<int>::approximate(3.141592653589793, 100);
+    assert(pi_approx_100.numerator() == 311 && pi_approx_100.denominator() == 99);
     
-    auto e_approx = stern_brocot<int>::approximate(2.71828, 50);
-    assert(e_approx.denominator() <= 50);
-    assert(std::abs(e_approx.to_double() - 2.71828) < 0.01);
+    auto pi_approx_1000 = stern_brocot<int>::approximate(3.141592653589793, 1000);
+    assert(pi_approx_1000.numerator() == 355 && pi_approx_1000.denominator() == 113);
+    
+    auto e_approx = stern_brocot<int>::approximate(2.718281828459045, 50);
+    assert(e_approx.numerator() == 106 && e_approx.denominator() == 39);
+    
+    auto sqrt2_approx = stern_brocot<int>::approximate(std::sqrt(2.0), 30);
+    assert(sqrt2_approx.numerator() == 41 && sqrt2_approx.denominator() == 29);
     
     // Edge cases
     stern_brocot<int> zero(0, 1);

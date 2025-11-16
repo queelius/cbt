@@ -98,6 +98,6 @@ namespace cbt {
  */
 
 // Version information
-constexpr const char* CBT_VERSION = "1.0.0";
+constexpr const char* CBT_VERSION = "1.1.0";
 
 } // namespace cbt
